@@ -7,6 +7,7 @@ package com.app.inventario.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import jakarta.persistence.*;
 
 /**
@@ -31,7 +32,7 @@ public class Venta implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaVenta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Total")
+    @Column(name = "total")
     private BigDecimal total;
     @JoinColumn(name = "ID_Cliente", referencedColumnName = "ID_Cliente")
     @ManyToOne
@@ -39,6 +40,8 @@ public class Venta implements Serializable {
     @JoinColumn(name = "ID_Usuario", referencedColumnName = "ID")
     @ManyToOne
     private Usuario iDUsuario;
+    @OneToMany(mappedBy = "iDVenta")
+    private List<VentaDetalle> ventaDetalleList;
 
     public Venta() {
     }
@@ -85,6 +88,14 @@ public class Venta implements Serializable {
 
     public void setIDUsuario(Usuario iDUsuario) {
         this.iDUsuario = iDUsuario;
+    }
+
+    public List<VentaDetalle> getVentaDetalleList() {
+        return ventaDetalleList;
+    }
+
+    public void setVentaDetalleList(List<VentaDetalle> ventaDetalleList) {
+        this.ventaDetalleList = ventaDetalleList;
     }
 
     @Override

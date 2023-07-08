@@ -30,9 +30,9 @@ public class VentaDetalle implements Serializable {
     @Column(name = "Cantidad")
     private Integer cantidad;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Precio_Unitario")
+    @Column(name = "precio_unitario")
     private BigDecimal precioUnitario;
-    @Column(name = "Subtotal")
+    @Column(name = "subtotal")
     private BigDecimal subtotal;
     @JoinColumn(name = "ID_Venta", referencedColumnName = "ID_Venta")
     @ManyToOne

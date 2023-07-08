@@ -29,12 +29,17 @@ public class Producto implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_Producto")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer iDProducto;
     @Column(name = "dscripcion")
     private String dscripcion;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Precio")
+    @Column(name = "precio")
     private BigDecimal precio;
+    @Column(name = "codigo")
+    private String codigo;
+    @Column(name = "categoria")
+    private String categoria;
     @Column(name = "Stock")
     private Integer stock;
     @Column(name = "Fecha_Registro")
@@ -52,6 +57,30 @@ public class Producto implements Serializable {
 
     public Integer getIDProducto() {
         return iDProducto;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Integer getiDProducto() {
+        return iDProducto;
+    }
+
+    public void setiDProducto(Integer iDProducto) {
+        this.iDProducto = iDProducto;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public void setIDProducto(Integer iDProducto) {
@@ -122,5 +151,5 @@ public class Producto implements Serializable {
     public String toString() {
         return "com.app.inventario.model.Producto[ iDProducto=" + iDProducto + " ]";
     }
-    
+
 }

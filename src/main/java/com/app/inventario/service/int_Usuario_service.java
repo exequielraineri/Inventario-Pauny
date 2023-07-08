@@ -19,5 +19,5 @@ public interface int_Usuario_service {
 
     public List<Usuario> listarUsuarios();
 
-    public Usuario obtenerUsuario(String user, String pass);
+    public Optional<Usuario> obtenerUsuario(String user);
 }

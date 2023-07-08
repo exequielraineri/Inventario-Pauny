@@ -4,10 +4,9 @@
  */
 package com.app.inventario.model;
 
-
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import jakarta.persistence.*;
 
 /**
  *
@@ -30,15 +29,15 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_Cliente")
     private Integer iDCliente;
-    @Column(name = "Nombre")
+    @Column(name = "nombre")
     private String nombre;
-    @Column(name = "Apellido")
+    @Column(name = "apellido")
     private String apellido;
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
-    @Column(name = "Telefono")
+    @Column(name = "telefono")
     private String telefono;
-    @Column(name = "Direccion")
+    @Column(name = "direccion")
     private String direccion;
     @OneToMany(mappedBy = "iDCliente")
     private List<Venta> ventaList;

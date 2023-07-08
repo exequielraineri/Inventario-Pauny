@@ -23,63 +23,61 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
             <h3>Modificando Producto</h3>
             <hr>
-            <form action="#" class="was-validated">
-
+            <form th:action="@{/productos/guardarModificacion}" th:object="${producto}" method="POST" class="was-validated">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="id">#:</label>
-                        <input type="text" class="form-control" id="id" placeholder="Ej. 56" name="id" readonly="true" disabled>   
+                        <input type="text" th:field="*{iDProducto}" class="form-control" id="id" placeholder="Ej. 56" name="id" readonly="true">   
                     </div>
                     <div class="row">
-                    <div class="form-group col-3">
-                        <label for="cod">Codigo:</label>
-                        <input type="text" class="form-control" id="cod" placeholder="Ej. 565566" name="cod" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Debe ingresar un codigo.</div>
-                    </div>
-                    <div class="form-group col">
-                        <label for="pwd">Descripción:</label>
-                        <input type="text" class="form-control" id="desc" placeholder="Ej. ruleman" name="desc" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Ingresa una descripción.</div>
-                    </div>    
+                        <div class="form-group col-3">
+                            <label for="cod">Codigo:</label>
+                            <input type="text" th:field="*{codigo}" class="form-control" id="cod" placeholder="Ej. 565566" name="cod" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Debe ingresar un codigo.</div>
+                        </div>
+                        <div class="form-group col">
+                            <label for="pwd">Descripción:</label>
+                            <input type="text" th:field="*{dscripcion}" class="form-control" id="desc" placeholder="Ej. ruleman" name="desc" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Ingresa una descripción.</div>
+                        </div>    
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                        <label for="pwd">Categoria:</label>
+                            <label for="pwd">Categoria:</label>
 
-                        <select id="categoria" class="form-select" required>
-                            <option selected disabled>Categoria</option>
-                            <option>Todos</option>
-                            <option>Filtros</option>
-                            <option>Bombas</option>
-                            <option>Rodamientos</option>
-                            <option>Insumos</option>
-                            <option>Accesorios</option>
-                            <option>Maquinaria</option>
-                        </select>
+                            <select id="categoria" th:field="*{categoria}" class="form-select" required>
+                                <option value="" selected>Categoria</option>
+                                <option value="Filtros">Filtros</option>
+                                <option value="Bombas">Bombas</option>
+                                <option value="Rodamientos">Rodamientos</option>
+                                <option value="Insumos">Insumos</option>
+                                <option value="Accesorios">Accesorios</option>
+                                <option value="Maquinaria">Maquinaria</option>
+                            </select>
 
-                    </div>
-                    <div class="form-group col-3">
-                        <label for="stock">Stock:</label>
-                        <input type="number" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" readonly="true" disabled>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Ingresa stock.</div>
-                    </div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="stock">Stock:</label>
+                            <input type="number" th:field="*{stock}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" readonly="true">
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Ingresa stock.</div>
+                        </div>
                     </div>
                     <div class="row">
-                    <div class="form-group col">
-                        <label for="precio">Precio Unidad:</label>
-                        <input type="number" min="1" step="0.01" class="form-control" id="precio" placeholder="Ej. $ 23500.50" name="precio" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Ingresa un precio.</div>
+                        <div class="form-group col">
+                            <label for="precio">Precio Unidad:</label>
+                            <input type="number" th:field="*{precio}" min="1" step="0.01" class="form-control" id="precio" placeholder="Ej. $ 23500.50" name="precio" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Ingresa un precio.</div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="add-stock">Agregar Stock:</label>
+                            <input type="number" class="form-control" min="1" id="add-stock" placeholder="Ej. 10" name="add_stock">
+                        </div>    
                     </div>
-                    <div class="form-group col-3">
-                        <label for="add-stock">Agregar Stock:</label>
-                        <input type="number" class="form-control" min="1" id="add-stock" placeholder="Ej. 10" name="add-stock">
-                    </div>    
-                    </div>
-                    
+
                 </div>
                 <hr>
                 <div class="modal-footer col" style="gap: 20px">

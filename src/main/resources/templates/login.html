@@ -17,6 +17,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>
         <div class="login-page bg-light">
             <div class="container">
+                <div class="alert alert-danger alert-dismissible" th:if="${alerta != null and alerta != ''}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>Error!</strong> <span th:text="${alerta}"></span>.
+                </div>
+
                 <div class="row">
                     <div class="col-lg-10 offset-lg-1 p-4">
                         <h3 class="mb-3">Inicia Sesión</h3>
@@ -24,12 +29,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row">
                                 <div class="col-md-7 pe-0">
                                     <div class="form-left h-100 py-5 px-5">
-                                        <form action="" class="row g-4">
+                                        <form th:action="@{/admin/auth}" th:object="${usuario}" method="POST" class="row g-4">
                                             <div class="col-12">
                                                 <label>Usuario<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
-                                                    <input type="text" class="form-control" placeholder="Ingresa Usuario">
+                                                    <input type="text" th:field="*{user}" class="form-control" placeholder="Ingresa Usuario">
                                                 </div>
                                             </div>
 
@@ -37,7 +42,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                                 <label>Contraseña<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
-                                                    <input type="password" class="form-control" placeholder="Ingresa Contraseña">
+                                                    <input type="password" th:field="*{password}" class="form-control" placeholder="Ingresa Contraseña">
                                                 </div>
                                             </div>
 

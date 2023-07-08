@@ -21,16 +21,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#search').on('keyup', function () {
+                    var value = $(this).val().toLowerCase();
+                    $('.productoRow').filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    });
+                });
+            });
+        </script>
     </head>
     <body>
 
         <div th:include="plantilla/plantilla_admin::header"></div>
         <div class="container p-4 shadow">
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Exitos!</strong> Se registro un nuevo producto.
-            </div>
+
             <h3>Inventario</h3>
             <hr>
             <div class="container">
@@ -49,7 +56,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="#" class="was-validated">
+                            <form th:action="@{/productos/nuevoProducto}" th:object="${producto}" method="POST" class="was-validated">
 
                                 <div class="modal-body">
                                     <div class="row">
@@ -57,49 +64,48 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                         <div class="form-group col-4">
                                             <label for="cod">Codigo:</label>
-                                            <input type="text" class="form-control" id="cod" placeholder="Ej. 565566" name="cod" required>
+                                            <input type="text" th:field="*{codigo}" class="form-control" id="cod" placeholder="Ej. 565566" name="cod" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Debe ingresar un codigo.</div>
                                         </div>
                                         <div class="form-group col">
                                             <label for="pwd">Descripción:</label>
-                                            <input type="text" class="form-control" id="desc" placeholder="Ej. ruleman" name="desc" required>
+                                            <input type="text" th:field="*{dscripcion}" class="form-control" id="desc" placeholder="Ej. ruleman" name="desc" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Ingresa una descripción.</div>
                                         </div>
                                     </div>
-                                    
-                                    <div class="row">
-                                        
-                                    
-                                    <div class="form-group col">
-                                        <label for="pwd">Categoria:</label>
 
-                                        <select id="categoria" class="form-select" required>
-                                            <option selected disabled>Categoria</option>
-                                            <option>Todos</option>
-                                            <option>Filtros</option>
-                                            <option>Bombas</option>
-                                            <option>Rodamientos</option>
-                                            <option>Insumos</option>
-                                            <option>Accesorios</option>
-                                            <option>Maquinaria</option>
-                                        </select>
-                                        <br>
-                                    </div>
-                                    <div class="form-group col">
-                                        <label for="stock">Stock:</label>
-                                        <input type="number" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" required>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Ingresa stock.</div>
-                                    </div>
-                                    <div class="form-group col">
-                                        <label for="precio">Precio Unidad:</label>
-                                        <input type="number" min="1" step="0.01" class="form-control" id="precio" placeholder="Ej. $ 23500.50" name="precio" required>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Ingresa un precio.</div>
-                                    </div>
+                                    <div class="row">
+
+
+                                        <div class="form-group col">
+                                            <label for="pwd">Categoria:</label>
+
+                                            <select id="categoria" th:field="*{categoria}" class="form-select" required>
+                                                <option value="" selected>Categoria</option>
+                                                <option value="Filtros">Filtros</option>
+                                                <option value="Bombas">Bombas</option>
+                                                <option value="Rodamientos">Rodamientos</option>
+                                                <option value="Insumos">Insumos</option>
+                                                <option value="Accesorios">Accesorios</option>
+                                                <option value="Maquinaria">Maquinaria</option>
+                                            </select>
+                                            <br>
                                         </div>
+                                        <div class="form-group col">
+                                            <label for="stock">Stock:</label>
+                                            <input type="number" th:field="*{stock}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Ingresa stock.</div>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="precio">Precio Unidad:</label>
+                                            <input type="number" th:field="*{precio}" min="1" step="0.01" class="form-control" id="precio" placeholder="Ej. $ 23500.50" name="precio" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Ingresa un precio.</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -114,24 +120,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
             <div class="container">
-                <form>
+                <form th:action="@{/productos/filtrarCat}" method="GET">
                     <div class="row">
                         <div class="col">
-                            <select id="categoria" class="form-select" >
-                                <option selected disabled>Categoria</option>
-                                <option>Todos</option>
-                                <option>Filtros</option>
-                                <option>Bombas</option>
-                                <option>Rodamientos</option>
-                                <option>Insumos</option>
-                                <option>Accesorios</option>
-                                <option>Maquinaria</option>
+                            <select id="categoria" name="categoria" class="form-select" required="true">
+                                <option value="" selected disabled>Categoria</option>
+                                <option value="Todos">Todos</option>
+                                <option value="Filtros">Filtros</option>
+                                <option value="Bombas">Bombas</option>
+                                <option value="Rodamientos">Rodamientos</option>
+                                <option value="Insumos">Insumos</option>
+                                <option value="Accesorios">Accesorios</option>
+                                <option value="Maquinaria">Maquinaria</option>
                             </select>
 
 
                         </div>
                         <div class="col">
-                            <input class="form-control" placeholder="Ej. ruleman" type="text"/>
+                            <input id="search" class="form-control" placeholder="Ej. ruleman" type="text"/>
 
                         </div>
                         <div class="col">
@@ -156,23 +162,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <th>Codigo</th>
                             <th>Descripción</th>
                             <th>Categoria</th>
-                            <th>Stock La Banda</th>
-                            <th>Stock Quimili</th>
+                            <th>Stock</th>
                             <th>Precio Unidad</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>38723</td>
-                            <td>Ruleman</td>
-                            <td>Rodamiento</td>
-                            <td>10</td>
-                            <td>2</td>
-                            <td>$230.2</td>
-                            <td><a  th:href="@{/admin/productos/editar}" class="btn btn-sm btn-warning" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a class="btn btn-sm btn-danger" title="Eliminar"><i class="fa-solid fa-trash"></i></a></td>
+                        <tr class="productoRow" th:each="p : ${productos}">
+                            <td th:text="${p.iDProducto}"></td>
+                            <td th:text="${p.codigo}"></td>
+                            <td name="dsc" th:text="${p.dscripcion}">Ruleman</td>
+                            <td th:text="${p.categoria}">Rodamiento</td>
+                            <td th:text="${p.stock}">10</td>
+                            <td th:text="${p.precio}">$230.2</td>
+                            <td>
+                                <a  th:href="@{/productos/editar/} + ${p.iDProducto}" class="btn btn-sm btn-warning" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a th:href="@{/productos/eliminar/} + ${p.iDProducto}" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

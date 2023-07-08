@@ -11,13 +11,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class UsuarioService implements int_Usuario_service{
-    
+public class UsuarioService implements int_Usuario_service {
+
     @Autowired
     private int_Usuario_repo usuarioRepo;
-    
+
     @Override
     public Usuario guardar(Usuario usuario) {
         return usuarioRepo.save(usuario);
@@ -39,9 +38,8 @@ public class UsuarioService implements int_Usuario_service{
     }
 
     @Override
-    public Usuario obtenerUsuario(String user, String pass) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Optional<Usuario> obtenerUsuario(String user) {
+        return usuarioRepo.findByUser(user);
     }
 
-    
 }
