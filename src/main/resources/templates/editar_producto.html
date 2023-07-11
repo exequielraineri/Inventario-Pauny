@@ -12,8 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src="https://kit.fontawesome.com/a157f31727.js" crossorigin="anonymous"></script>
 
 
-        <link rel="stylesheet" href="../../static/css/estilos.css">
-
+        <link rel="stylesheet" th:href="@{/css/style.css}">
     </head>
     <body>
         <div th:include="plantilla/plantilla_admin::header"></div>
@@ -25,8 +24,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <hr>
             <form th:action="@{/productos/guardarModificacion}" th:object="${producto}" method="POST" class="was-validated">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="id">#:</label>
+                    <div class="form-group col">
+                        <label for="id">ID:</label>
                         <input type="text" th:field="*{iDProducto}" class="form-control" id="id" placeholder="Ej. 56" name="id" readonly="true">   
                     </div>
                     <div class="row">
@@ -74,7 +73,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </div>
                         <div class="form-group col-3">
                             <label for="add-stock">Agregar Stock:</label>
-                            <input type="number" class="form-control" min="1" id="add-stock" placeholder="Ej. 10" name="add_stock">
+                            <input type="number" class="form-control" min="0" value="0" id="add_stock" placeholder="Ej. 10" name="add_stock">
                         </div>    
                     </div>
 
@@ -85,8 +84,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <button type="submit" class="btn btn-warning">Guardar Modificacion</button>
                 </div>
             </form>
-
-
         </div>
 
 

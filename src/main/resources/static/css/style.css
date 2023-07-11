@@ -1,0 +1,86 @@
+body{
+    box-sizing: border-box;
+    margin:0;
+    padding: 0;
+}
+.bloque{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    box-sizing:border-box;
+    gap:10%
+}
+
+
+.div-clientes{
+
+    display:flex;
+    flex-direction:column;
+    padding: 10px;
+    border-radius:5px;
+    width: 200px;
+    position:relative;
+    height:80px;
+}
+
+
+
+.avatar{
+    max-width: 50px;
+}
+
+.encabezado{
+    display: flex;
+    justify-content:end;
+    align-items:center;
+    padding: 5px;
+    border-radius:10px;
+}
+
+.label-bloque{
+    font-size:1.5em;
+    font-weight:500;
+    text-align:end;
+}
+
+.icono{
+    opacity:50%;
+    font-size:50px;
+    position:absolute;
+    top:20px;
+    left:10px;
+}
+
+.cantidad{
+    position:absolute;
+    font-weight:400;
+    font-size:35px;
+    top:30px;
+    right:9px;
+}
+
+
+.dash{
+    width:100%;
+    background-color:red;
+    height:50vh;
+    
+    display:grid;
+    grid-template-areas: "panel perfil"
+                         "panel perfil";
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    
+}
+
+.dash-panel{
+    width:100%;
+    background-color: green;
+    grid-area:panel;
+}
+
+.dash-perfil{
+    width:100%;
+    background-color: blue;
+    grid-area: perfil;
+}

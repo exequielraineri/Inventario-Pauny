@@ -48,6 +48,9 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "iDProducto")
     private List<VentaDetalle> ventaDetalleList;
 
+    @Column(name = "cantidad")
+    private Integer cantidad;
+
     public Producto() {
     }
 
@@ -105,6 +108,14 @@ public class Producto implements Serializable {
 
     public Integer getStock() {
         return stock;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public void setStock(Integer stock) {

@@ -27,6 +27,7 @@ public class Venta implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_Venta")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer iDVenta;
     @Column(name = "Fecha_Venta")
     @Temporal(TemporalType.DATE)

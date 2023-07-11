@@ -11,34 +11,30 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class ClienteService implements int_Cliente_service{
-    
+public class ClienteService implements int_Cliente_service {
+
     @Autowired
     private int_Cliente_repo clienteRepo;
 
     @Override
     public Cliente guardar(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return clienteRepo.save(cliente);
     }
 
     @Override
     public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        clienteRepo.deleteById(id);
     }
 
     @Override
     public Optional<Cliente> obtenerCliente(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return clienteRepo.findById(id);
     }
 
     @Override
     public List<Cliente> listarCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return clienteRepo.findAll();
     }
-    
-    
 
-    
 }

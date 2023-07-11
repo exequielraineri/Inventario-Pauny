@@ -31,6 +31,10 @@ public class adminController {
 
     private Producto producto = new Producto();
 
+    @GetMapping("/home")
+    public String home() {
+        return "index";
+    }
 
     @PostMapping("/auth")
     public String auth(@ModelAttribute("usuario") Usuario usuario, Model model, HttpSession session) {

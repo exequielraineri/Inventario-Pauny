@@ -22,22 +22,22 @@ public class VentaDetalleService implements int_Venta_Detalle_service{
 
     @Override
     public VentaDetalle guardar(VentaDetalle ventaDetalle) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return venta_Detalle_repo.save(ventaDetalle);
     }
 
     @Override
     public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        venta_Detalle_repo.deleteById(id);
     }
 
     @Override
     public Optional<VentaDetalle> obtenerVentaDetalle(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return venta_Detalle_repo.findById(id);
     }
 
     @Override
     public List<VentaDetalle> listarVentaDetalle() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return venta_Detalle_repo.findAll();
     }
     
     

@@ -26,6 +26,7 @@ public class VentaDetalle implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_Venta_Detalle")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer iDVentaDetalle;
     @Column(name = "Cantidad")
     private Integer cantidad;

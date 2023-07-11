@@ -28,6 +28,7 @@ public class Cliente implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_Cliente")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer iDCliente;
     @Column(name = "nombre")
     private String nombre;
@@ -39,6 +40,12 @@ public class Cliente implements Serializable {
     private String telefono;
     @Column(name = "direccion")
     private String direccion;
+    @Column(name = "firma")
+    private String firma;
+    @Column(name = "cuit", length = 11)
+    private String cuit;
+    
+    
     @OneToMany(mappedBy = "iDCliente")
     private List<Venta> ventaList;
 
@@ -51,6 +58,30 @@ public class Cliente implements Serializable {
 
     public Integer getIDCliente() {
         return iDCliente;
+    }
+
+    public Integer getiDCliente() {
+        return iDCliente;
+    }
+
+    public void setiDCliente(Integer iDCliente) {
+        this.iDCliente = iDCliente;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+
+    public String getCuit() {
+        return cuit;
+    }
+
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
     }
 
     public void setIDCliente(Integer iDCliente) {
