@@ -15,9 +15,11 @@ import com.app.inventario.service.int_Venta_Detalle_service;
 import com.app.inventario.service.int_Venta_service;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,14 +62,18 @@ public class nuevaVentaController {
 
     Cliente cliente = new Cliente();
 
+    Date fechaHoy = new Date();
+    SimpleDateFormat sf = new SimpleDateFormat("dd ' de ' MMMMM ',' yyyy");
+
     @GetMapping("")
     public String nuevaVenta(Model model) {
-
+        fechaHoy = new Date();
         model.addAttribute("producto_encontrado", new Producto());
         model.addAttribute("lista", lista_productos);
         model.addAttribute("total", total);
         model.addAttribute("alerta", mensajeAlerta);
         model.addAttribute("cliente", cliente);
+        model.addAttribute("fechaHoy", sf.format(fechaHoy));
         return "nueva_venta";
     }
 
@@ -86,6 +92,7 @@ public class nuevaVentaController {
         model.addAttribute("producto_encontrado", p_encontrado);
         model.addAttribute("lista", lista_productos);
         model.addAttribute("cliente", cliente);
+        model.addAttribute("fechaHoy", sf.format(fechaHoy));
         return "nueva_venta";
     }
 
@@ -128,14 +135,14 @@ public class nuevaVentaController {
         return "redirect:/nuevaVenta";
     }
 
-    @GetMapping("/cancelarVenta")
+    @GetMapping("/nuevaVenta")
     public String cancelarVenta(Model model) {
         lista_productos = new ArrayList<>();
         total = 0;
 
         model.addAttribute("lista", lista_productos);
         model.addAttribute("total", total);
-        mensajeAlerta = "Venta cancelada!";
+        mensajeAlerta = "";
         model.addAttribute("alerta", mensajeAlerta);
         cliente = new Cliente();
         model.addAttribute("cliente", cliente);
@@ -146,8 +153,7 @@ public class nuevaVentaController {
     public String realizarVenta(Model model, HttpSession sesion) {
         venta = new Venta();
         //Optional<Cliente> c = clienteService.obtenerCliente(1);
-        
-        
+
         venta.setFechaVenta(new Date());
         venta.setIDCliente(cliente);
         venta.setTotal(BigDecimal.valueOf(total));
@@ -174,21 +180,33 @@ public class nuevaVentaController {
 
     @PostMapping("/filtrarCliente")
     public String filtrarCliente(@ModelAttribute("cliente") Cliente c, Model model) {
+        System.out.println("Cliente c: " + c.getNombre());
         List<Cliente> lista = clienteService.listarCliente();
-        boolean f=false;
+        boolean f = false;
         for (Cliente lisC : lista) {
-            if (lisC.getNombre().equals(c.getNombre())) {
+            if (lisC.getNombre().equalsIgnoreCase(c.getNombre())) {
                 cliente = lisC;
-                f=true;
+                f = true;
                 break;
             }
         }
-
-        if(!f){
+        if (!f) {
             cliente=clienteService.guardar(c);
         }
+        mensajeAlerta = null;
         model.addAttribute("cliente", cliente);
         return "redirect:/nuevaVenta";
+    }
+
+    @PostMapping("/guardarModificacion")
+    public String guardarModificacion(@ModelAttribute("cliente") Cliente c, Model model) {
+        cliente.setFirma(c.getFirma());
+        cliente.setCuit(c.getCuit());
+        cliente = clienteService.guardar(cliente);
+        mensajeAlerta = null;
+        model.addAttribute("cliente", cliente);
+        return "redirect:/nuevaVenta";
+
     }
 
 }

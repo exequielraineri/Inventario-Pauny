@@ -42,29 +42,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <strong>Atención!</strong> <span th:text="${alerta}" ></span>.
                         </div>
                     </div>
-                    <h3>
-                        Punto de Venta - La Banda
-                    </h3>
-                    <div class="row">
-                        <form th:object="${cliente}" th:action="@{/nuevaVenta/filtrarCliente}" method="POST">
-                            <div class="col">
-                                <label class="form-label">Cliente</label>
-                                <input th:field="*{nombre}" class="form-control" type="text" placeholder="Ej. Exequiel Raineri" autocomplete="on"/>
+                    <div class="d-flex">
+                        <h3 class="col">
+                            Punto de Venta - La Banda
+                        </h3>
+                        <div class="col" style="text-align: end;font-weight: 500;font-size: 15px">
+                            <label class="form-label col" th:text="${fechaHoy}" ></label>
+                        </div>
+                    </div>
+                    <div class="row" style="align-items: end">
+                        <form th:object="${cliente}" th:action="@{/nuevaVenta/filtrarCliente}" method="POST" class="col-4">
+                            <div class="row">
+                                <div class="col-8">
+                                    <label class="form-label">Cliente</label>
+                                    <input th:field="*{nombre}" class="form-control" type="text" placeholder="Ej. Exequiel Raineri" autocomplete="on" required="true" />
+                                </div>
+                                <div class="col" style="display: flex; align-items: end">
+                                    <input type="submit" class="btn btn-primary" value="Filtrar" />
+                                </div>
                             </div>
-                            <div class="col">
+                        </form>
+                        <form th:if="${cliente.firma!=null}" th:object="${cliente}" th:action="@{/nuevaVenta/guardarModificacion}" method="POST" class="col row" style="display: flex; align-items: end">
+                            <div class="col-4">
                                 <label class="form-label">Firma</label>
-                                <input th:field="*{firma}" class="form-control" type="text" placeholder="Ej. Establecimiento" autocomplete="on"/>
+                                <input th:field="*{firma}" class="form-control" type="text" placeholder="Ej. Establecimiento" autocomplete="on" required="true"/>
                             </div>
                             <div class="col">
                                 <label class="form-label">Cuit</label>
-                                <input th:field="*{cuit}" class="form-control" type="text" placeholder="Ej. 30456548978" autocomplete="on"/>
+                                <input th:field="*{cuit}" class="form-control" type="text" placeholder="Ej. 30456548978" autocomplete="on" required="true"/>
                             </div>
-                            <div class="col">
-                                <label class="form-label">Fecha</label>
-                                <input class="form-control" type="date" value="2023-07-08" disabled/>
+
+                            <div class="col" style="display: flex; align-items: end">
+                                <button class="btn btn-primary" value="Guardar" name="btnGuardar">Guardar</button>
                             </div>
-                            <input type="submit" value="Filtrar" />
                         </form>
+
                     </div>
                     <hr>
 
@@ -86,7 +98,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <form th:action="@{/nuevaVenta/agregarProducto}" class="col row" style="display: flex; align-items: end" th:object="${producto_encontrado}" method="post">
 
                             <input th:field="*{iDProducto}" hidden="true" />
-                            <div class="col">
+                            <div class="col-4">
                                 <label class="form-label">Descripcion</label>
                                 <input class="form-control bg-light" th:field="*{dscripcion}" placeholder="Ej. Reten" readonly="true"/>                        
 
@@ -114,11 +126,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </form>
                     </div>
                     <hr>
-                    <div class="col" style="display: flex;justify-content: end; gap: 20px">
+                    <div class="col" style="display: flex;justify-content: end; gap: 20px" th:if="${lista.size!=0}">
 
-                        <a th:href="@{/nuevaVenta/cancelarVenta}" class="btn btn btn-danger">Cancelar Venta</a>
+                        <a th:href="@{/nuevaVenta/nuevaVenta}" class="btn btn btn-info">Nueva Venta</a>
                         <a th:href="@{/nuevaVenta/realizarVenta}" class="btn btn btn-success">Realizar Venta</a>
-
+                        
                     </div>
                     <hr>
                 </div>

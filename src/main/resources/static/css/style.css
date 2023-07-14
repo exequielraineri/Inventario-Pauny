@@ -62,7 +62,6 @@ body{
 
 .dash{
     width:100%;
-    background-color:red;
     height:50vh;
     
     display:grid;
@@ -75,12 +74,10 @@ body{
 
 .dash-panel{
     width:100%;
-    background-color: green;
     grid-area:panel;
 }
 
 .dash-perfil{
     width:100%;
-    background-color: blue;
     grid-area: perfil;
 }

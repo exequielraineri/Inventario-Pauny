@@ -21,7 +21,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-
         <link rel="stylesheet" th:href="@{/css/style.css}">
 
 
@@ -36,19 +35,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div class="div-clientes shadow-sm">
                     <i class="fa-solid fa-boxes-stacked icono"></i>
                     <label class="label-bloque">Productos</label>
-                    <span class="cantidad">20</span>
+                    <span class="cantidad" th:text="${cant_productos}">20</span>
                 </div>
 
                 <div class="div-clientes shadow-sm">
                     <i class="fa-solid fa-boxes-stacked icono"></i>
-                    <label class="label-bloque">Venta</label>
-                    <span class="cantidad">20</span>
+                    <label class="label-bloque">Ventas</label>
+                    <span class="cantidad" th:text="${cant_ventas}">20</span>
                 </div>
 
                 <div class="div-clientes shadow-sm">
                     <i class="fa-solid fa-boxes-stacked icono"></i>
-                    <label class="label-bloque">Cliente</label>
-                    <span class="cantidad">20</span>
+                    <label class="label-bloque">Clientes</label>
+                    <span class="cantidad" th:text="${cant_clientes}">20</span>
                 </div>
             </div>
             <hr>
@@ -58,8 +57,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </div>
             <hr>
             <div class="dash">
-                <div class="dash-panel"></div>
-                <div class="dash-perfil"></div>
+                <div class="dash-panel">
+                    <div class="container">
+                        <h2 align="center">Gráfico de Ventas</h2>
+
+                        <div id="container2"
+                             style="width: 550px; height: 400px; margin: 0 auto"></div>
+                    </div>
+
+
+                </div>
+                <div class="dash-perfil container">
+                    
+                    <div class="container">
+                        <h2 align="center">Gráfico de Ventas</h2>
+
+                        <div id="container"
+                             style="width: 550px; height: 400px; margin: 0 auto"></div>
+                    </div>
+                    <hr>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Información del Usuario</h5>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col">
+                                <label class="form-label" style="font-weight: 500">Nombre: </label> <span class="form-control-sm" th:text="${session.usuario.nombre}+', ' +${session.usuario.apellido}"></span><br>
+                                <label class="form-label" style="font-weight: 500">Email: </label> <span th:text="${session.usuario.email}" ></span><br>
+                                <label class="form-label" style="font-weight: 500">Rol: </label> <span th:text="${session.usuario.rol}" ></span><br>
+                                <label class="form-label" style="font-weight: 500">Usuario: </label> <span th:text="${session.usuario.user}" ></span><br>
+                                <label class="form-label" style="font-weight: 500">Contraseña: </label> <span th:text="${session.usuario.password}" ></span><br>
+
+                            </div>
+                        </div>
+                        <div class="card-footer" style="display: flex; justify-content: end">
+                            <button class="btn btn-secondary">Cambiar Contraseña</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -72,5 +107,105 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> 
 
 
+
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script th:inline="javascript">
+            $(function(){
+            Highcharts.chart('container', {
+            chart: {
+            type: 'column'
+            },
+                    title: {
+                    text: 'Ventas en el Mes'
+                    },
+                    subtitle: {
+                    text: 'All Details is not true its a dummy Map'
+                    },
+                    xAxis: {
+                    categories: [[${mapeo.keySet()}]],
+                            crosshair: true
+                    },
+                    yAxis: {
+                    min: 0,
+                            max:30,
+                            title: {
+                            text: 'Cantidad de ventas'
+                            }
+                    },
+                    tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                    },
+                    plotOptions: {
+                    column: {
+                    pointPadding: 0.2,
+                            borderWidth: 0
+                    }
+                    },
+                    series: [{
+                    name: 'Mes',
+                            data: [[${mapeo.values()}]]
+                    }]
+            });
+            });
+        </script>
+
+
+        
+        <script th:inline="javascript">
+            $(function(){
+            Highcharts.chart('container2', {
+            chart: {
+            type: 'column'
+            },
+                    title: {
+                    text: 'Productos más vendidos'
+                    },
+                    subtitle: {
+                    text: 'All Details is not true its a dummy Map'
+                    },
+                    xAxis: {
+                    categories: [[${mapeo.keySet()}]],
+                            crosshair: true
+                    },
+                    yAxis: {
+                    min: 0,
+                            max:30,
+                            title: {
+                            text: 'Cantidad de productos vendidos'
+                            }
+                    },
+                    tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                    },
+                    plotOptions: {
+                    column: {
+                    pointPadding: 0.2,
+                            borderWidth: 0
+                    }
+                    },
+                    series: [{
+                    name: 'Producto',
+                            data: [[${mapeo.values()}]]
+                    }]
+            });
+            });
+        </script>
+        
     </body>
 </html>

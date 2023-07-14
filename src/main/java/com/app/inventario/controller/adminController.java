@@ -31,10 +31,7 @@ public class adminController {
 
     private Producto producto = new Producto();
 
-    @GetMapping("/home")
-    public String home() {
-        return "index";
-    }
+   
 
     @PostMapping("/auth")
     public String auth(@ModelAttribute("usuario") Usuario usuario, Model model, HttpSession session) {
@@ -55,7 +52,7 @@ public class adminController {
         if (siExiste) {
             model.addAttribute("usuario", usuario);
             model.addAttribute("producto", producto);
-            return "productos";
+            return "redirect:/inicio";
 
         } else {
             alerta = "Usuario o Contraseña incorrecta!";
@@ -63,7 +60,7 @@ public class adminController {
             return "login";
         }
 
-    }
+    }    
 
     @GetMapping("/inicio")
     public String inicio(Model model) {
@@ -90,4 +87,14 @@ public class adminController {
         return "editar_producto";
     }
 
+    
+    @GetMapping("/cerrarSesion")
+    public String cerrarSesion(HttpSession session){
+       if(session != null){
+           session.invalidate();
+       }
+       
+       return "redirect:/admin/login";
+    }
+    
 }
