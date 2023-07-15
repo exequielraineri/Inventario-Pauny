@@ -7,8 +7,10 @@ package com.app.inventario.controller;
 import com.app.inventario.model.Cliente;
 import com.app.inventario.model.Producto;
 import com.app.inventario.model.Venta;
+import com.app.inventario.model.VentaDetalle;
 import com.app.inventario.service.int_Cliente_service;
 import com.app.inventario.service.int_Producto_service;
+import com.app.inventario.service.int_Venta_Detalle_service;
 import com.app.inventario.service.int_Venta_service;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -37,9 +39,13 @@ public class inicioController {
     @Autowired
     private int_Venta_service ventaService;
 
+    @Autowired
+    private int_Venta_Detalle_service ventaDetalleService;
+
     private int cant_productos;
 
-    private Map<String, Integer> mapeo;
+    private Map<String, Integer> mapeoVentas;
+    private Map<String, Integer> mapeoProductos;
 
     @GetMapping("")
     public String home(Model model) {
@@ -48,22 +54,10 @@ public class inicioController {
         model.addAttribute("cant_clientes", cant_Clientes());
         model.addAttribute("cant_ventas", cant_Ventas());
 
-        mapeo = obtenerMapeo(this.mapeo);
-       // obtenerMapeo(mapeo);
-        //mapeo = new LinkedHashMap<>();
-        /*mapeo.put("Enero", 50);
-        mapeo.put("Febrero", 93);
-        mapeo.put("Marzo", 69);
-        mapeo.put("Abril", 23);
-        mapeo.put("Mayo", 25);
-        mapeo.put("Junio", 18);
-        mapeo.put("Julio", 50);
-        mapeo.put("Agosto", 93);
-        mapeo.put("Septiembre", 69);
-        mapeo.put("Octubre", 23);
-        mapeo.put("Noviembre", 25);
-        mapeo.put("Diciembre", 18);*/
-        model.addAttribute("mapeo", mapeo);
+        mapeoVentas = obtenerMapeo(this.mapeoVentas);
+        mapeoProductos = obtenerMapeoProductos(this.mapeoProductos);
+        model.addAttribute("mapeoVentas", mapeoVentas);
+        model.addAttribute("mapeoProductos", mapeoProductos);
 
         return "index";
     }
@@ -172,6 +166,28 @@ public class inicioController {
         mapeo.put("Diciembre", diciembre);
 
         return mapeo;
+    }
+
+    private Map<String, Integer> obtenerMapeoProductos(Map<String, Integer> mapeoProductos) {
+        mapeoProductos = new LinkedHashMap<>();
+        List<VentaDetalle> detalles = ventaDetalleService.listarVentaDetalle();
+        for (VentaDetalle d : detalles) {
+            Integer idProducto = d.getIDProducto().getIDProducto();
+            int cant = 0;
+            System.out.println("d_id->"+d.getIDProducto().getIDProducto());
+            System.out.println("id->"+idProducto);
+            for (int i = 0; i < detalles.size(); i++) {
+                System.out.println("pasa--->" + d.getIDProducto().getDscripcion());
+                if (detalles.get(i).getIDProducto().getiDProducto().equals(idProducto)) {
+                    System.out.println("pasa en cant++");
+                    cant+=detalles.get(i).getCantidad();
+                }
+            }
+            mapeoProductos.put(d.getIDProducto().getDscripcion(), cant);
+        }
+
+        return mapeoProductos;
+
     }
 
 }

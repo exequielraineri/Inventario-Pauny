@@ -100,20 +100,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <input th:field="*{iDProducto}" hidden="true" />
                             <div class="col-4">
                                 <label class="form-label">Descripcion</label>
-                                <input class="form-control bg-light" th:field="*{dscripcion}" placeholder="Ej. Reten" readonly="true"/>                        
+                                <input class="form-control bg-light" th:field="*{dscripcion}" readonly="true"/>                        
 
                             </div>
                             <div class="col">
                                 <label class="form-label">Cantidad</label>
-                                <input class="form-control" name="cantidad" type="number" min="1" placeholder="Ej. 5" required="true"/>                        
+                                <input class="form-control col" name="cantidad" type="number" min="1" placeholder="Ej. 5" required="true"/>                        
                             </div>
-                            <div class="col">
+                            <div class="col-3">
                                 <label class="form-label">Precio</label>
-                                <input class="form-control bg-light" th:field="*{precio}" type="number" placeholder="Ej. $ 12531.25" step="0.01" readonly="true"/>                        
+                                <input class="form-control bg-light" th:field="*{precio}" type="number" step="0.01" readonly="true"/>                        
                             </div>
                             <div class="col">
                                 <label class="form-label">Stock</label>
-                                <input class="form-control bg-light" th:field="*{stock}" type="number" placeholder="Ej. 30" readonly="true"/>                        
+                                <input class="form-control bg-light" th:field="*{stock}" type="number" readonly="true"/>                        
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-primary">Agregar</button>
