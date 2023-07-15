@@ -21,7 +21,6 @@ import jakarta.persistence.*;
     @NamedQuery(name = "Producto.findByIDProducto", query = "SELECT p FROM Producto p WHERE p.iDProducto = :iDProducto"),
     @NamedQuery(name = "Producto.findByDscripcion", query = "SELECT p FROM Producto p WHERE p.dscripcion = :dscripcion"),
     @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio"),
-    @NamedQuery(name = "Producto.findByStock", query = "SELECT p FROM Producto p WHERE p.stock = :stock"),
     @NamedQuery(name = "Producto.findByFechaRegistro", query = "SELECT p FROM Producto p WHERE p.fechaRegistro = :fechaRegistro")})
 public class Producto implements Serializable {
 
@@ -40,8 +39,10 @@ public class Producto implements Serializable {
     private String codigo;
     @Column(name = "categoria")
     private String categoria;
-    @Column(name = "Stock")
-    private Integer stock;
+    @Column(name = "stock_banda")
+    private Integer stockBanda;
+    @Column(name = "stock_quimili")
+    private Integer stockQuimili;
     @Column(name = "Fecha_Registro")
     @Temporal(TemporalType.DATE)
     private Date fechaRegistro;
@@ -106,9 +107,7 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public Integer getStock() {
-        return stock;
-    }
+   
 
     public Integer getCantidad() {
         return cantidad;
@@ -118,9 +117,22 @@ public class Producto implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    public Integer getStockBanda() {
+        return stockBanda;
     }
+
+    public void setStockBanda(Integer stockBanda) {
+        this.stockBanda = stockBanda;
+    }
+
+    public Integer getStockQuimili() {
+        return stockQuimili;
+    }
+
+    public void setStockQuimili(Integer stockQuimili) {
+        this.stockQuimili = stockQuimili;
+    }
+
 
     public Date getFechaRegistro() {
         return fechaRegistro;

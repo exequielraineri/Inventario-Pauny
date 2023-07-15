@@ -38,7 +38,4 @@ public class ProductoService implements int_Producto_service{
     public List<Producto> listarProducto() {
         return productoRepo.findAll();
     }
-    
-    
-    
 }

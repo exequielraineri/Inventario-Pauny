@@ -95,7 +95,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         </div>
                                         <div class="form-group col">
                                             <label for="stock">Stock:</label>
-                                            <input type="number" th:field="*{stock}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" required>
+                                            <input type="number" th:field="*{stockBanda}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Ingresa stock.</div>
                                         </div>
@@ -162,7 +162,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <th>Codigo</th>
                             <th>Descripción</th>
                             <th>Categoria</th>
-                            <th>Stock</th>
+                            <th>Stock La Banda</th>
+                            <th>Stock Quimili</th>
                             <th>Precio Unidad</th>
                             <th></th>
                         </tr>
@@ -173,8 +174,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <td th:text="${p.codigo}"></td>
                             <td name="dsc" th:text="${p.dscripcion}">Ruleman</td>
                             <td th:text="${p.categoria}">Rodamiento</td>
-                            <td th:text="${p.stock}">10</td>
-                            <td th:text="${p.precio}">$230.2</td>
+                            <td th:text="${p.stockBanda}">10</td>
+                            <td th:text="${p.stockQuimili}">4</td>
+                            <td th:text="'$ '+${p.precio}">$230.2</td>
                             <td>
                                 <a  th:href="@{/productos/editar/} + ${p.iDProducto}" class="btn btn-sm btn-warning" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>
                                 <a th:href="@{/productos/eliminar/} + ${p.iDProducto}" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa-solid fa-trash"></i></a>

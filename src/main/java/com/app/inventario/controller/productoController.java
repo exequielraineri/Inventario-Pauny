@@ -5,7 +5,9 @@
 package com.app.inventario.controller;
 
 import com.app.inventario.model.Producto;
+import com.app.inventario.model.Usuario;
 import com.app.inventario.service.int_Producto_service;
+import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/productos")
 public class productoController {
-    
+
     @Autowired
     private int_Producto_service productoService;
-    
+
     @GetMapping("")
     public String productos(Model model) {
         List<Producto> productos = productoService.listarProducto();
@@ -40,41 +42,53 @@ public class productoController {
         model.addAttribute("producto", new Producto());
         return "productos";
     }
-    
+
     @PostMapping("/nuevoProducto")
     public String guardarProducto(@ModelAttribute("producto") Producto p, Model model) {
         p.setFechaRegistro(new Date());
         productoService.guardar(p);
         return "redirect:/productos";
     }
-    
+
     @GetMapping("/eliminar/{iDProducto}")
     public String eliminarProducto(@PathVariable Integer iDProducto) {
         productoService.eliminar(iDProducto);
         return "redirect:/productos";
     }
-    
+
     @GetMapping("/editar/{iDProducto}")
     public String editarProducto(@PathVariable Integer iDProducto, Model model) {
         Optional<Producto> producto = productoService.obtenerProducto(iDProducto);
         model.addAttribute("producto", producto.get());
         return "editar_producto";
     }
-    
+
     @PostMapping("/guardarModificacion")
-    public String guardarModificacion(@ModelAttribute("producto") Producto producto, @RequestParam("add_stock") Integer add_stock) {
+    public String guardarModificacion(@ModelAttribute("producto") Producto producto, @RequestParam("add_stock") Integer add_stock, HttpSession session) {
         //Optional<Producto> p=productoService.obtenerProducto(producto.getIDProducto());
-        System.out.println("add_ "+ add_stock);
+        System.out.println("add_ " + add_stock);
+        Usuario u = (Usuario) session.getAttribute("usuario");
+        Optional<Producto> p=productoService.obtenerProducto(producto.getIDProducto());
+        System.out.println("p->"+p.get().getStockBanda());
+        System.out.println("Producto banda->" + producto.getStockBanda());
+        System.out.println("Producto quimili->" + producto.getStockQuimili());
+
         if (add_stock != 0 || add_stock != null) {
-            producto.setStock(producto.getStock()+add_stock);
+            if (u.getUser().equals("santi")) {
+                producto.setStockBanda(producto.getStockBanda() + add_stock);
+                producto.setStockQuimili(producto.getStockQuimili());
+            }
+            if (u.getUser().equals("mati")) {
+                producto.setStockQuimili(producto.getStockQuimili() + add_stock);
+                producto.setStockBanda(producto.getStockBanda());
+            }
         }
-       
-        
+
         producto.setFechaRegistro(new Date());
         productoService.guardar(producto);
         return "redirect:/productos";
     }
-    
+
     @GetMapping("/filtrarCat")
     public String filtrarCat(@RequestParam("categoria") String categoria, Model model) {
         System.out.println("Categoria-->" + categoria);
@@ -93,5 +107,5 @@ public class productoController {
             return "productos";
         }
     }
-    
+
 }

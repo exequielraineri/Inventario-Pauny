@@ -59,7 +59,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </div>
                         <div class="form-group col-3">
                             <label for="stock">Stock:</label>
-                            <input type="number" th:field="*{stock}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" readonly="true">
+                            <input th:if="${session.usuario.user}=='santi'" type="number" th:field="*{stockBanda}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" readonly="true">
+                            <input th:if="${session.usuario.user}=='mati'" type="number" th:field="*{stockQuimili}" class="form-control" min="1" id="stock" placeholder="Ej. 30" name="stock" readonly="true">
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Ingresa stock.</div>
                         </div>
