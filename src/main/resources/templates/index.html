@@ -52,7 +52,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </div>
             <hr>
             <div>
-                <h2>Bienvenido! Santiago</h2>
+                <h2>Bienvenido! <span th:text=${session.usuario.nombre}></span></h2>
                 <p>Este es tu panel de información</p>
             </div>
             <hr>
@@ -68,7 +68,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                 </div>
                 <div class="dash-perfil container">
-                    
+
                     <div class="container">
                         <h2 align="center">Gráfico de Productos</h2>
 
@@ -161,7 +161,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </script>
 
 
-        
+
         <script th:inline="javascript">
             $(function(){
             Highcharts.chart('grafico2', {
@@ -206,6 +206,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             });
             });
         </script>
-        
+
     </body>
 </html>

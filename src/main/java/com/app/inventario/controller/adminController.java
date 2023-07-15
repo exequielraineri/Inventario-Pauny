@@ -9,7 +9,6 @@ import com.app.inventario.model.Usuario;
 import com.app.inventario.service.int_Usuario_service;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +34,7 @@ public class adminController {
 
     @PostMapping("/auth")
     public String auth(@ModelAttribute("usuario") Usuario usuario, Model model, HttpSession session) {
-        System.out.println("Usuario:---->" + usuario.getUser());
+        //System.out.println("Usuario:---->" + usuario.getUser());
         List<Usuario> usuarios = usuarioService.listarUsuarios();
         String alerta = "";
         boolean siExiste = false;

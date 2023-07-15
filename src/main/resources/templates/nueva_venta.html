@@ -44,7 +44,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </div>
                     <div class="d-flex">
                         <h3 class="col">
-                            Punto de Venta - La Banda
+                            Punto de Venta - <span th:if="${session.usuario.user=='santi'}">La Banda</span>
+                            <span th:if="${session.usuario.user=='mati'}">Quimili</span>
+
                         </h3>
                         <div class="col" style="text-align: end;font-weight: 500;font-size: 15px">
                             <label class="form-label col" th:text="${fechaHoy}" ></label>
@@ -113,7 +115,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </div>
                             <div class="col">
                                 <label class="form-label">Stock</label>
-                                <input class="form-control bg-light" th:field="*{stockBanda}" type="number" readonly="true"/>                        
+                                <input th:if="${session.usuario.user=='santi'}" class="form-control bg-light" th:field="*{stockBanda}" type="number" readonly="true"/>                        
+                                <input th:if="${session.usuario.user=='mati'}" class="form-control bg-light" th:field="*{stockQuimili}" type="number" readonly="true"/>                        
+
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-primary">Agregar</button>
@@ -130,7 +134,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                         <a th:href="@{/nuevaVenta/nuevaVenta}" class="btn btn btn-info">Nueva Venta</a>
                         <a th:href="@{/nuevaVenta/realizarVenta}" class="btn btn btn-success">Realizar Venta</a>
-                        
+
                     </div>
                     <hr>
                 </div>

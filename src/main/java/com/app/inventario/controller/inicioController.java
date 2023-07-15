@@ -6,13 +6,14 @@ package com.app.inventario.controller;
 
 import com.app.inventario.model.Cliente;
 import com.app.inventario.model.Producto;
+import com.app.inventario.model.Usuario;
 import com.app.inventario.model.Venta;
 import com.app.inventario.model.VentaDetalle;
 import com.app.inventario.service.int_Cliente_service;
 import com.app.inventario.service.int_Producto_service;
 import com.app.inventario.service.int_Venta_Detalle_service;
 import com.app.inventario.service.int_Venta_service;
-import java.util.HashMap;
+import jakarta.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,15 +48,19 @@ public class inicioController {
     private Map<String, Integer> mapeoVentas;
     private Map<String, Integer> mapeoProductos;
 
+    private Usuario usuarioSession;
+
     @GetMapping("")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
         //cant_productos = cant_Productos();
-        model.addAttribute("cant_productos", cant_Productos());
-        model.addAttribute("cant_clientes", cant_Clientes());
-        model.addAttribute("cant_ventas", cant_Ventas());
+
+        usuarioSession = (Usuario) session.getAttribute("usuario");
 
         mapeoVentas = obtenerMapeo(this.mapeoVentas);
         mapeoProductos = obtenerMapeoProductos(this.mapeoProductos);
+        model.addAttribute("cant_productos", cant_Productos());
+        model.addAttribute("cant_clientes", cant_Clientes());
+        model.addAttribute("cant_ventas", cant_Ventas());
         model.addAttribute("mapeoVentas", mapeoVentas);
         model.addAttribute("mapeoProductos", mapeoProductos);
 
@@ -74,7 +79,13 @@ public class inicioController {
 
     private int cant_Ventas() {
         List<Venta> ventas = ventaService.listarVenta();
-        return ventas.size();
+        int cant = 0;
+        for (Venta venta : ventas) {
+            if (venta.getIDUsuario().equals(usuarioSession)) {
+                cant++;
+            }
+        }
+        return cant;
     }
 
     private Map<String, Integer> obtenerMapeo(Map<String, Integer> mapeo) {
@@ -94,62 +105,62 @@ public class inicioController {
 
         List<Venta> ventas = ventaService.listarVenta();
         for (Venta venta : ventas) {
-            System.out.println("mes-->" + venta.getFechaVenta().getMonth());
-            int mes = venta.getFechaVenta().getMonth() + 1;
-            switch (mes) {
-                case 1: {
-                    enero++;
-                    break;
-                }
-                case 2: {
-                    febrero++;
-                    break;
-                }
-                case 3: {
-                    marzo++;
-                    break;
-                }
-                case 4: {
-                    abril++;
-                    break;
-                }
-                case 5: {
-                    mayo++;
-                    break;
-                }
-                case 6: {
-                    junio++;
-                    break;
-                }
-                case 7: {
-                    julio++;
-                    break;
-                }
-                case 8: {
-                    agosto++;
-                    break;
-                }
-                case 9: {
-                    septimbre++;
-                    break;
-                }
-                case 10: {
-                    octubre++;
-                    break;
-                }
-                case 11: {
-                    novimbre++;
-                    break;
-                }
-                case 12: {
-                    diciembre++;
-                    break;
-                }
-                default: {
-                    break;
+            if (venta.getIDUsuario().equals(usuarioSession)) {
+                int mes = venta.getFechaVenta().getMonth() + 1;
+                switch (mes) {
+                    case 1: {
+                        enero++;
+                        break;
+                    }
+                    case 2: {
+                        febrero++;
+                        break;
+                    }
+                    case 3: {
+                        marzo++;
+                        break;
+                    }
+                    case 4: {
+                        abril++;
+                        break;
+                    }
+                    case 5: {
+                        mayo++;
+                        break;
+                    }
+                    case 6: {
+                        junio++;
+                        break;
+                    }
+                    case 7: {
+                        julio++;
+                        break;
+                    }
+                    case 8: {
+                        agosto++;
+                        break;
+                    }
+                    case 9: {
+                        septimbre++;
+                        break;
+                    }
+                    case 10: {
+                        octubre++;
+                        break;
+                    }
+                    case 11: {
+                        novimbre++;
+                        break;
+                    }
+                    case 12: {
+                        diciembre++;
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
             }
-
         }
 
         mapeo.put("Enero", enero);
@@ -171,21 +182,33 @@ public class inicioController {
     private Map<String, Integer> obtenerMapeoProductos(Map<String, Integer> mapeoProductos) {
         mapeoProductos = new LinkedHashMap<>();
         List<VentaDetalle> detalles = ventaDetalleService.listarVentaDetalle();
-        for (VentaDetalle d : detalles) {
-            Integer idProducto = d.getIDProducto().getIDProducto();
-            int cant = 0;
-            System.out.println("d_id->"+d.getIDProducto().getIDProducto());
-            System.out.println("id->"+idProducto);
-            for (int i = 0; i < detalles.size(); i++) {
-                System.out.println("pasa--->" + d.getIDProducto().getDscripcion());
-                if (detalles.get(i).getIDProducto().getiDProducto().equals(idProducto)) {
-                    System.out.println("pasa en cant++");
-                    cant+=detalles.get(i).getCantidad();
+
+        List<Venta> venta = ventaService.listarVenta();
+        for (Venta v : venta) {
+            if (v.getIDUsuario().equals(usuarioSession)) {
+                for (VentaDetalle vDetalle : v.getVentaDetalleList()) {
+                    Integer idProducto = vDetalle.getIDProducto().getIDProducto();
+                    int cant = 0;
+                    for (int i = 0; i < detalles.size(); i++) {
+                        if (detalles.get(i).getIDProducto().getiDProducto().equals(idProducto)) {
+                            cant += detalles.get(i).getCantidad();
+                        }
+                    }
+                    mapeoProductos.put(vDetalle.getIDProducto().getDscripcion(), cant);
+
                 }
             }
-            mapeoProductos.put(d.getIDProducto().getDscripcion(), cant);
         }
 
+        /*for (VentaDetalle d : detalles) {
+            Integer idProducto = d.getIDProducto().getIDProducto();
+            int cant = 0;
+            for (int i = 0; i < detalles.size(); i++) {
+                if (detalles.get(i).getIDProducto().getiDProducto().equals(idProducto)) {
+                    cant += detalles.get(i).getCantidad();
+                }
+            }
+        mapeoProductos.put(d.getIDProducto().getDscripcion(), cant);*/
         return mapeoProductos;
 
     }

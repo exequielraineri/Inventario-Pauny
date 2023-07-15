@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.*;
+import java.sql.Timestamp;
 
 /**
  *
@@ -30,8 +31,7 @@ public class Venta implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer iDVenta;
     @Column(name = "Fecha_Venta")
-    @Temporal(TemporalType.DATE)
-    private Date fechaVenta;
+    private Timestamp fechaVenta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total")
     private BigDecimal total;
@@ -59,11 +59,11 @@ public class Venta implements Serializable {
         this.iDVenta = iDVenta;
     }
 
-    public Date getFechaVenta() {
+    public Timestamp getFechaVenta() {
         return fechaVenta;
     }
 
-    public void setFechaVenta(Date fechaVenta) {
+    public void setFechaVenta(Timestamp fechaVenta) {
         this.fechaVenta = fechaVenta;
     }
 
@@ -123,5 +123,5 @@ public class Venta implements Serializable {
     public String toString() {
         return "com.app.inventario.model.Venta[ iDVenta=" + iDVenta + " ]";
     }
-    
+
 }

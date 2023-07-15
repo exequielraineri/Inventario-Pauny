@@ -15,11 +15,11 @@ import com.app.inventario.service.int_Venta_Detalle_service;
 import com.app.inventario.service.int_Venta_service;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,8 +83,8 @@ public class nuevaVentaController {
         Producto p_encontrado = new Producto();
         for (Producto p : productos) {
             if (p.getCodigo().equals(codigo)) {
-                System.out.println("buecando__-->" + p.getCodigo());
-                System.out.println("dasdad:_ " + codigo);
+                //System.out.println("buecando__-->" + p.getCodigo());
+                //System.out.println("dasdad:_ " + codigo);
                 p_encontrado = p;
             }
         }
@@ -97,19 +97,31 @@ public class nuevaVentaController {
     }
 
     @PostMapping("/agregarProducto")
-    public String agregarProducto(@ModelAttribute("producto_encontrado") Producto producto, Model model, @RequestParam("cantidad") Integer cantidad) {
+    public String agregarProducto(HttpSession session, @ModelAttribute("producto_encontrado") Producto producto, Model model, @RequestParam("cantidad") Integer cantidad) {
         System.out.println("Entra a agregar");
         Optional<Producto> prodEncontrado = productoService.obtenerProducto(producto.getIDProducto());
-
-        prodEncontrado.get().setCantidad(cantidad);
+        Usuario u = (Usuario) session.getAttribute("usuario");
+        if (u.getUser().equals("santi")) {
+            if (cantidad <= prodEncontrado.get().getStockBanda()) {
+                prodEncontrado.get().setCantidad(cantidad);
+            } else {
+                return "redirect:/nuevaVenta";
+            }
+        } else {
+            if (cantidad <= prodEncontrado.get().getStockQuimili()) {
+                prodEncontrado.get().setCantidad(cantidad);
+            } else {
+                return "redirect:/nuevaVenta";
+            }
+        }
         productoService.guardar(prodEncontrado.get());
         total += (Float.parseFloat(prodEncontrado.get().getPrecio().toString()) * cantidad);
         lista_productos.add(prodEncontrado.get());
-        System.out.println("Producto: " + prodEncontrado.get().getCategoria());
-        System.out.println("Cod: " + prodEncontrado.get().getCodigo());
+        //System.out.println("Producto: " + prodEncontrado.get().getCategoria());
+        //System.out.println("Cod: " + prodEncontrado.get().getCodigo());
         model.addAttribute("lista", lista_productos);
         model.addAttribute("total", total);
-        System.out.println("Total_ " + total);
+        //System.out.println("Total_ " + total);
         model.addAttribute("cliente", cliente);
         return "redirect:/nuevaVenta";
     }
@@ -136,7 +148,7 @@ public class nuevaVentaController {
     }
 
     @GetMapping("/nuevaVenta")
-    public String cancelarVenta(Model model) {
+    public String resetVenta(Model model) {
         lista_productos = new ArrayList<>();
         total = 0;
 
@@ -154,7 +166,7 @@ public class nuevaVentaController {
         venta = new Venta();
         //Optional<Cliente> c = clienteService.obtenerCliente(1);
 
-        venta.setFechaVenta(new Date());
+        venta.setFechaVenta(new Timestamp(new Date().getTime()));
         venta.setIDCliente(cliente);
         venta.setTotal(BigDecimal.valueOf(total));
         venta.setIDUsuario((Usuario) sesion.getAttribute("usuario"));
@@ -167,6 +179,12 @@ public class nuevaVentaController {
             ventaDetalle.setCantidad(p.getCantidad());
             float subTotal = Float.valueOf(p.getPrecio().toString()) * p.getCantidad();
             ventaDetalle.setSubtotal(BigDecimal.valueOf(subTotal));
+            if (venta.getIDUsuario().getUser().equals("santi")) {
+                p.setStockBanda(p.getStockBanda() - p.getCantidad());
+            } else {
+                p.setStockQuimili(p.getStockQuimili() - p.getCantidad());
+            }
+            productoService.guardar(p);
             ventaDetalleService.guardar(ventaDetalle);
             ventaDetalle = new VentaDetalle();
         }
@@ -191,7 +209,7 @@ public class nuevaVentaController {
             }
         }
         if (!f) {
-            cliente=clienteService.guardar(c);
+            cliente = clienteService.guardar(c);
         }
         mensajeAlerta = null;
         model.addAttribute("cliente", cliente);
