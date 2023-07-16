@@ -37,6 +37,11 @@ public class VentaService implements int_Venta_service{
     public List<Venta> listarVenta() {
         return ventaRepo.findAll();
     }
+
+    @Override
+    public List<Venta> listarVentaDesc() {
+        return ventaRepo.findAllDesc();
+    }
     
     
     

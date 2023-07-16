@@ -17,4 +17,6 @@ public interface int_Venta_service {
     public Optional<Venta> obtenerVenta(Integer id);
 
     public List<Venta> listarVenta();
+
+    public List<Venta> listarVentaDesc();
 }

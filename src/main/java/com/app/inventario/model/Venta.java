@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 @Table(name = "venta")
 @NamedQueries({
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
+    @NamedQuery(name = "Venta.findAllDesc", query = "SELECT v FROM Venta v ORDER BY v.fechaVenta DESC"),
     @NamedQuery(name = "Venta.findByIDVenta", query = "SELECT v FROM Venta v WHERE v.iDVenta = :iDVenta"),
     @NamedQuery(name = "Venta.findByFechaVenta", query = "SELECT v FROM Venta v WHERE v.fechaVenta = :fechaVenta"),
     @NamedQuery(name = "Venta.findByTotal", query = "SELECT v FROM Venta v WHERE v.total = :total")})
@@ -124,4 +126,10 @@ public class Venta implements Serializable {
         return "com.app.inventario.model.Venta[ iDVenta=" + iDVenta + " ]";
     }
 
+    
+    public String mostrarFecha(){
+        SimpleDateFormat sf=new SimpleDateFormat("dd-MM-yyyy  HH:mm");
+        return sf.format(fechaVenta);
+    }
+    
 }

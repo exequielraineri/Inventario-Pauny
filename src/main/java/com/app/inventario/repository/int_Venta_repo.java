@@ -5,10 +5,12 @@
 package com.app.inventario.repository;
 
 import com.app.inventario.model.Venta;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface int_Venta_repo extends JpaRepository<Venta, Integer>{
-    
+public interface int_Venta_repo extends JpaRepository<Venta, Integer> {
+
+    public List<Venta> findAllDesc();
 }
