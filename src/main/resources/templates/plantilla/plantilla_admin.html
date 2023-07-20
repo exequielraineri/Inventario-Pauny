@@ -50,12 +50,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
                 <div class="dropdown mx-5">
                     <a type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img th:src="@{/img/santiKart.jpg}" class="img-fluid rounded-circle avatar mr-2">
+                        <img th:if="${session.usuario.user=='mati'}" th:src="@{/img/2.png}" class="img-fluid rounded-circle avatar mr-2">
+                        <img th:if="${session.usuario.user=='santi'}" th:src="@{/img/santiKart.jpg}" class="img-fluid rounded-circle avatar mr-2">
                         <span th:text="${session.usuario.nombre} + ', ' + ${session.usuario.apellido}" ></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Claro/Oscuro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/perfil}">Perfil</a></li>
                         <li><a class="dropdown-item" th:href="@{/admin/cerrarSesion}">Cerrar Session</a></li>
                     </ul>
                 </div>
@@ -64,7 +64,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
         <div th:fragment="footer">
-            <div class="footer bg-secondary" style="display: flex; justify-content: center;margin-top: 100%">
+            <div class="footer bg-secondary" style="display: flex; justify-content: center;margin-top: 50vh">
 
 
                 <footer>
