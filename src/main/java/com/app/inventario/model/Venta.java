@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
     @NamedQuery(name = "Venta.findAllDesc", query = "SELECT v FROM Venta v ORDER BY v.fechaVenta DESC"),
     @NamedQuery(name = "Venta.findByIDVenta", query = "SELECT v FROM Venta v WHERE v.iDVenta = :iDVenta"),
-    @NamedQuery(name = "Venta.findByFechaVenta", query = "SELECT v FROM Venta v WHERE v.fechaVenta = :fechaVenta"),
+    @NamedQuery(name = "Venta.findByFechaVenta", query = "SELECT v FROM Venta v WHERE v.fechaVenta BETWEEN :fechaInicio AND :fechaFin"),
     @NamedQuery(name = "Venta.findByTotal", query = "SELECT v FROM Venta v WHERE v.total = :total")})
 public class Venta implements Serializable {
 

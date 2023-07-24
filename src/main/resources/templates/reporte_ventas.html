@@ -13,8 +13,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src="https://kit.fontawesome.com/a157f31727.js" crossorigin="anonymous"></script>
 
 
-
-
         <!-- Latest compiled and minified CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -33,6 +31,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 });
             });
         </script>
+        
+        <style>
+            @media print{
+                .btn, .form-control, .modal, .form-select ,hr,.footer, footer,header, .navbar{
+                    display: none;
+                }
+            }
+        </style>
     </head>
     <body>
         <div th:include="plantilla/plantilla_admin::header"></div>
@@ -40,11 +46,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container p-4 shadow">
             <h2>Ventas realizadas</h2>
             <hr>
-            <div style="display: flex; justify-content: end">
-                <input id="search" class="form-control" style="width: 20%" placeholder="Ej. venta" type="text"/>
+            <div class="container">
+                <div class="row">
+
+
+                    <form class="col-10" th:action="@{/reporte/ventas/filtrarFecha}" method="GET">
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" class="form-control" name="fecha" th:value="${fecha}"/>
+                            </div>
+                            <div class="col">
+                                <input id="search" class="form-control" placeholder="Ej. ruleman" type="text"/>
+
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="col">
+                        <button class="btn btn-secondary" onclick="print()">Imprimir</button>
+                    </div>
+                </div>
             </div>
             <hr>
-            <table class="table table-hover">
+            <table class="table table-hover" width="100%" >
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
@@ -65,7 +93,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <div><span title="Firma" th:text="${venta.iDCliente.firma}"></span></div>
                             </div>
                         </td>
-                        <td th:text="'$ '+${venta.total}"></td>
+                        <td th:text="'$ '+  ${#numbers.formatDecimal(venta.total, 2, 'POINT', 3, 'COMMA')}"></td>
                         <td th:text="${venta.iDUsuario.nombre}"></td>
                         <td>
 
@@ -154,15 +182,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </tr>
                 </tbody>
             </table>
+            <div class="container bg-dark">
+                <h5 class="text-center text-white">Total $ <span th:text="${#numbers.formatDecimal(total, 2, 'POINT', 3, 'COMMA')}"></span></h5>
+            </div>
         </div>
 
         <div th:include="plantilla/plantilla_admin::footer"></div>
 
-        
+
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> 
 
 
+
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
     </body>
 </html>

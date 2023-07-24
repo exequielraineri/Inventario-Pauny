@@ -5,6 +5,7 @@
 package com.app.inventario.service;
 
 import com.app.inventario.model.Venta;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,4 +20,6 @@ public interface int_Venta_service {
     public List<Venta> listarVenta();
 
     public List<Venta> listarVentaDesc();
+
+    public List<Venta> listarFechaBETWEEN(Timestamp fechaInicio, Timestamp fechaFin);
 }
